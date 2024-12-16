@@ -1,0 +1,19 @@
+[
+    {
+      "name": "五一广场",
+      "lat": 28.2278,
+      "lon": 112.9381,
+      "description": "五一广场是长沙市的商业和文化中心，历史悠久。",
+      "openingHours": "08:00 - 22:00",
+      "image": "img/wuyi_square.jpg"
+    },
+    {
+      "name": "岳麓山",
+      "lat": 28.2293,
+      "lon": 112.9396,
+      "description": "岳麓山是长沙的名胜之一，以自然景观和文化景点闻名。",
+      "openingHours": "全天开放",
+      "image": "img/yuelu_mountain.jpg"
+    }
+  ]
+  
