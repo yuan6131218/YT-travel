@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+  <title>地图显示范围</title>
+  <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+  <style>
+    html,
+    body,
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .lnglat {
+      color: #0288d1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+  <div class="info">
+    <h4>地图限制区域信息</h4>
+    <p>NorthEast坐标：<span id="ne" class="lnglat"></span></p>
+    <p>SouthWest坐标：<span id="sw" class="lnglat"></span></p>
+  </div>
+  <div class="input-card" style="width:14rem;">
+    <h4>限制地图显示范围</h4>
+    <div class="input-item">
+      <button class="btn" id="lock-bounds">限定地图显示范围</button>
+    </div>
+    <div class="input-item">
+      <button class="btn" id="unlock-bounds">取消地图显示限制</button>
+    </div>
+  </div>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=您申请的key值"></script>
+  <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+  <script>
+    // 创建地图，设置地图中心坐标为五一广场（长沙市的经纬度坐标为：113.002655, 28.213478）
+    var map = new AMap.Map('container', {
+      center: [113.002655, 28.213478],  // 设置地图的中心为五一广场
+      zoom: 13,  // 设置地图的缩放级别，适合长沙市区显示，数字越大地图越近
+      showIndoorMap: false  // 禁用室内地图
+    });
+
+    // 函数：用于显示地图的限制区域信息
+    function logMapInfo() {
+      var limitBounds = map.getLimitBounds();  // 获取当前地图的限制范围
+      if (limitBounds) {
+        // 显示限制区域的东北和西南坐标
+        document.querySelector("#ne").innerText = limitBounds.northEast.toString();
+        document.querySelector("#sw").innerText = limitBounds.southWest.toString();
+      } else {
+        // 如果没有限制范围，显示"未限定"
+        document.querySelector("#ne").innerText = document.querySelector("#sw").innerText = "未限定";
+      }
+    }
+
+    // 限制地图显示范围：以当前地图的显示范围作为限制区域
+    function lockMapBounds() {
+      var bounds = map.getBounds();  // 获取地图当前的显示范围
+      map.setLimitBounds(bounds);  // 设置地图的限制范围为当前显示的范围
+      logMapInfo();  // 更新限制区域信息
+    }
+
+    // 取消地图显示限制
+    function unlockMapBounds() {
+      map.clearLimitBounds();  // 清除地图的显示限制
+      logMapInfo();  // 更新限制区域信息
+    }
+
+    // 默认启用地图范围限定，以当前显示区域为限制
+    lockMapBounds();
+    logMapInfo();
+
+    // 绑定按钮事件
+    document.querySelector("#lock-bounds").onclick = lockMapBounds;  // 绑定按钮，点击后限制地图显示范围
+    document.querySelector("#unlock-bounds").onclick = unlockMapBounds;  // 绑定按钮，点击后取消限制
+  </script>
+</body>
+
+</html>
