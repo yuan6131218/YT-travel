@@ -3,40 +3,46 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-  }
-  
-  header {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  main {
+}
+
+#container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-  }
-  
-  #map {
-    width: 80%;
-    margin-bottom: 20px;
-  }
-  
-  #tour-info {
-    width: 80%;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #tour-info h2 {
-    margin-top: 0;
-  }
-  
-  #spot-details {
+    justify-content: space-around;
     margin-top: 20px;
-  }
-  
+}
+
+.section {
+    width: 45%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section-header {
+    background-color: #246fc5;
+    color: white;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+
+.section-content {
+    padding: 20px;
+}
+
+.section-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+}
