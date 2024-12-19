@@ -7,7 +7,7 @@ body {
 
 #container {
     display: flex;
-    justify-content: space-between;  /* 两个板块水平排列 */
+    justify-content: space-between;  /* 让两个板块水平排列 */
     margin-top: 20px;
     gap: 20px;  /* 两个板块之间的间距 */
     padding: 0 20px;
@@ -32,18 +32,14 @@ body {
     padding: 20px;
 }
 
-.section-image-container {
-    position: relative;  /* 使容器相对定位 */
-    max-width: 400px;  /* 限制容器的最大宽度 */
-    margin: 0 auto;  /* 居中容器 */
-    overflow: hidden;  /* 超出容器的部分隐藏 */
-}
-
 .section-image {
-    width: 100%;  /* 图片宽度填充容器 */
-    height: auto;  /* 高度自动调整，保持图片比例 */
-    aspect-ratio: 3 / 2;  /* 固定长宽比 3:2 */
-    object-fit: contain;  /* 确保图片不被拉伸，按比例显示 */
+    width: 100%;  /* 图片宽度占容器的 100% */
+    height: auto;  /* 高度自适应 */
+    max-width: 145px; /* 图片宽度最大限制为 145px */
+    max-height: 95px; /* 图片高度最大限制为 95px */
+    aspect-ratio: 14.5 / 9.5;  /* 设置固定的 14.5:9.5 比例 */
+    object-fit: contain;  /* 图片不会被拉伸，保持比例 */
+    margin: 0 auto; /* 图片水平居中 */
 }
 
 h2 {
