@@ -33,7 +33,7 @@ body {
 }
 
 .section-image {
-    width: 100%;  /* 让图片占据容器宽度 */
+    width: 80%;  /* 让图片占据容器宽度 */
     height: auto;  /* 保持原始纵横比 */
     object-fit: cover;  /* 保证图片填充容器，但保持比例 */
     aspect-ratio: 3 / 2;  /* 设置固定的长宽比：3:2 */
