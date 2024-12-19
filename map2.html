@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义起点终点的公交换乘查询</title>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=u12fawL0duezKEULOrQJYAZ8Ad51EcHr"></script>
+    <script src="https://code.bdstatic.com/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #result {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            width: 250px;
+            height: 450px;
+            background: #fff;
+            box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+            border-radius: 7px;
+            z-index: 99;
+            padding: 10px;
+        }
+        .result_title {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            background: #00BFFF;
+            border-radius: 7px 7px 0px 0px;
+            color: #fff;
+        }
+        #result_list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .result_list_li {
+            color: #000;
+            padding: 10px;
+            font-size: 14px;
+            border-bottom: 1px solid #D3D3D3;
+        }
+        .result_list_li:hover {
+            cursor: pointer;
+            background: #00BFFF;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <div id="result">
+        <p class="result_title">起点：<span id="startPoint">选择起点</span><span>&nbsp;&nbsp;&nbsp;&nbsp;终点：<span id="endPoint">选择终点</span></span></p>
+        <ul id="result_list"></ul>
+        <select id="routePolicy">
+            <option value="0">推荐方案</option>
+            <option value="1">最少时间</option>
+            <option value="2">最少换乘</option>
+            <option value="3">最少步行</option>
+            <option value="4">不乘地铁</option>
+            <option value="5">优先地铁</option>
+        </select>
+        <button class="btn" id="search">生成路线</button>
+    </div>
+
+    <script>
+        // 初始化地图
+        var map = new BMapGL.Map('container');
+        map.centerAndZoom(new BMapGL.Point(112.9793, 28.2135), 14); // 五一广场
+        map.enableScrollWheelZoom();
+
+        // 景点数据
+        var spots = [
+            { title: "杜甫江阁", position: new BMapGL.Point(112.975234, 28.190399) },
+            { title: "太平老街", position: new BMapGL.Point(112.978715, 28.199138) },
+            { title: "湖南省博物馆", position: new BMapGL.Point(112.999736, 28.217654) },
+            { title: "橘子洲", position: new BMapGL.Point(112.969535, 28.2029) },
+            { title: "岳麓书院", position: new BMapGL.Point(112.946304, 28.186467) },
+            { title: "长沙IFAS", position: new BMapGL.Point(112.984985, 28.198061) },
+            { title: "烈士公园", position: new BMapGL.Point(113.005862, 28.214741) },
+            { title: "梅溪湖文化艺术中心", position: new BMapGL.Point(112.91344, 28.202382) },
+            { title: "黄兴广场", position: new BMapGL.Point(112.982951, 28.194376) }
+        ];
+
+        // 初始化选择的起点和终点
+        var startPoint = null;
+        var endPoint = null;
+
+        // 标记景点
+        spots.forEach(function(spot) {
+            var marker = new BMapGL.Marker(spot.position);
+            map.addOverlay(marker);
+            marker.addEventListener("click", function() {
+                if (!startPoint) {
+                    // 选择起点
+                    startPoint = spot;
+                    document.getElementById('startPoint').innerText = spot.title;
+                    marker.setIcon(new BMapGL.Icon("http://api.map.baidu.com/images/misc/flag.png", new BMapGL.Size(20, 32))); // 设置起点图标
+                } else if (!endPoint && spot !== startPoint) {
+                    // 选择终点，确保起点和终点不相同
+                    endPoint = spot;
+                    document.getElementById('endPoint').innerText = spot.title;
+                    marker.setIcon(new BMapGL.Icon("http://api.map.baidu.com/images/misc/flag.png", new BMapGL.Size(20, 32))); // 设置终点图标
+                }
+                updateResultList(); // 更新结果列表
+            });
+        });
+
+        // 更新右侧景点列表
+        function updateResultList() {
+            var html = '';
+            spots.forEach(function(spot) {
+                html += `<li class="result_list_li" data-lat="${spot.position.lat}" data-lng="${spot.position.lng}">${spot.title}</li>`;
+            });
+            $('#result_list').html(html);
+        }
+
+        // 路线生成
+        $("#search").click(function() {
+            if (!startPoint || !endPoint) {
+                alert("请先选择起点和终点");
+                return;
+            }
+
+            map.clearOverlays(); // 清除标记
+            map.centerAndZoom(startPoint.position, 14); // 重新设置起点为中心
+
+            // 获取选择的路线策略
+            var selectedPolicy = $("#routePolicy").val();
+            var routePolicy = [BMAP_TRANSIT_POLICY_RECOMMEND, // 推荐路线
+                BMAP_TRANSIT_POLICY_LEAST_TIME, // 最少时间
+                BMAP_TRANSIT_POLICY_LEAST_TRANSFER, // 最少换乘
+                BMAP_TRANSIT_POLICY_LEAST_WALKING, // 最少步行
+                BMAP_TRANSIT_POLICY_AVOID_SUBWAYS, // 不乘地铁
+                BMAP_TRANSIT_POLICY_FIRST_SUBWAYS // 优先地铁
+            ][selectedPolicy];
+
+            // 创建公交换乘路径规划对象
+            var transit = new BMapGL.TransitRoute(map, {
+                renderOptions: { map: map, panel: "result" },
+                policy: routePolicy
+            });
+
+            // 执行路径规划
+            transit.search(startPoint.position, endPoint.position);
+
+            // 显示提示消息
+            alert("已生成路线...");
+        });
+
+        // 右侧景点列表点击选择功能
+        $(document).on("click", ".result_list_li", function() {
+            var title = $(this).text();
+            var spot = spots.find(function(s) { return s.title === title; });
+
+            if (!startPoint) {
+                startPoint = spot;
+                document.getElementById('startPoint').innerText = title;
+            } else if (!endPoint && spot !== startPoint) {
+                endPoint = spot;
+                document.getElementById('endPoint').innerText = title;
+            }
+            updateResultList(); // 更新列表
+        });
+    </script>
+</body>
+</html>
