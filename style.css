@@ -7,17 +7,17 @@ body {
 
 #container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* 两个板块水平排列 */
     margin-top: 20px;
-    flex-direction: column;  /* 让内容垂直排列 */
+    gap: 20px; /* 两个板块之间的间距 */
+    padding: 0 20px;
 }
 
 .section {
-    width: 45%;
+    width: 48%; /* 两个板块各占页面的 48% */
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -33,10 +33,10 @@ body {
 }
 
 .section-image {
-    width: 80%;  /* 让图片占据容器宽度 */
-    height: auto;  /* 保持原始纵横比 */
-    object-fit: cover;  /* 保证图片填充容器，但保持比例 */
-    aspect-ratio: 3 / 2;  /* 设置固定的长宽比：3:2 */
+    width: 100%;
+    height: auto; /* 保持图片比例 */
+    object-fit: cover; /* 保证图片填充容器 */
+    aspect-ratio: 3 / 2; /* 固定长宽比 3:2 */
     border-radius: 8px;
     margin-bottom: 15px;
 }
