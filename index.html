@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>长沙旅游攻略系统</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS - 旅游规划系统</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>长沙旅游攻略</h1>
-    <p>从五一广场出发，探索长沙的美丽景点</p>
-  </header>
-  <main>
-    <div id="map" style="height: 500px;"></div>
-    <div id="tour-info">
-      <h2>景点信息</h2>
-      <div id="spot-details">
-        <h3>选择一个景点查看详细信息</h3>
-      </div>
+    <div id="container">
+        <!-- 板块1：长沙九大想去景点 -->
+        <div class="section" id="section1">
+            <div class="section-header">
+                <h2>长沙九大想去景点</h2>
+            </div>
+            <div class="section-content">
+                <a href="map1.html" target="_blank">
+                    <img src="C:\Users\73020\Desktop\期末任务\code\长沙图.jpg" alt="九大景点封面" class="section-image">
+                </a>
+                <p>点击查看九大想去景点，探索长沙的美丽景点。</p>
+            </div>
+        </div>
+
+        <!-- 板块2：景点旅游自定义规划 -->
+        <div class="section" id="section2">
+            <div class="section-header">
+                <h2>九大景点旅游自定义规划</h2>
+            </div>
+            <div class="section-content">
+                <a href="map2.html" target="_blank">
+                    <img src="C:\Users\73020\Desktop\期末任务\code\长沙的夜景.jpg" alt="三天规划封面" class="section-image">
+                </a>
+                <p>点击查看如何根据个人需求定制旅游路线，并生成交通规划。</p>
+            </div>
+        </div>
     </div>
-  </main>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
