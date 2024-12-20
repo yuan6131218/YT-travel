@@ -8,6 +8,7 @@ body {
 #container {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap; /* 适配小屏幕 */
     margin-top: 20px;
 }
 
