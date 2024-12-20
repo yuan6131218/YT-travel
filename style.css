@@ -7,17 +7,16 @@ body {
 
 #container {
     display: flex;
-    justify-content: space-between;  /* 让两个板块水平排列 */
+    justify-content: space-around;
     margin-top: 20px;
-    gap: 20px;  /* 两个板块之间的间距 */
-    padding: 0 20px;
 }
 
 .section {
-    width: 48%;  /* 每个板块占 48% 的宽度，确保留白 */
+    width: 45%;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -33,13 +32,9 @@ body {
 }
 
 .section-image {
-    width: 100%;  /* 图片宽度占容器的 100% */
-    height: auto;  /* 高度自适应 */
-    max-width: 145px; /* 图片宽度最大限制为 145px */
-    max-height: 95px; /* 图片高度最大限制为 95px */
-    aspect-ratio: 14.5 / 9.5;  /* 设置固定的 14.5:9.5 比例 */
-    object-fit: contain;  /* 图片不会被拉伸，保持比例 */
-    margin: 0 auto; /* 图片水平居中 */
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 h2 {
